@@ -53,7 +53,7 @@ file_sc_weights = './data/Schaefer2018_200Parcels_7Networks_count.csv'
 file_sc_distances = './data/Schaefer2018_200Parcels_7Networks_distance.csv'
 file_empirical_timeseries = './data/TEPs.mat'
 file_leadfield_matrix = './data/leadfield'
-file_stimulus = './data/stimulus_weights.npy'
+file_stimulus = './data/stim_weights.npy'
 
 sc_weights_original = pd.read_csv(file_sc_weights, header=None, sep=' ').values
 sc_weights_norm = np.log1p(sc_weights_original)/np.linalg.norm(np.log1p(sc_weights_original))
@@ -134,6 +134,7 @@ fits_pcc_all = np.zeros((len(subs), len(runs)), dtype=np.float32)
 fits_cos_sim_course = np.zeros((len(subs), len(runs), n_epochs), dtype=np.float32)
 for isub, sub in enumerate(subs):
     for irun, run in enumerate(runs):
+        print(dict_fitting[sub][run])
         raw = dict_fitting[sub][run]['ts_raw_fitted']
         ts_raw_fit[isub, irun] = raw
         ts_eeg_fit[isub, irun] = 0.0005 * np.matmul(leadfield_matrix, raw.T).T
